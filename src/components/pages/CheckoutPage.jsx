@@ -730,14 +730,16 @@ const handleSubmitOrder = async () => {
               </h3>
 
               <div className="space-y-3 mb-4">
-                {cartItems.map((item) => (
+{cartItems.map((item) => (
                   <div key={`${item.Id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-3">
                     <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                      <img
-                        src={item.images[0]}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
+                      {item.images?.[0] && (
+                        <img
+                          src={item.images[0]}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-800 truncate">
