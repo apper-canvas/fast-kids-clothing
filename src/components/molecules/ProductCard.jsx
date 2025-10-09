@@ -23,16 +23,16 @@ const ProductCard = ({ product, onAddToCart }) => {
       >
         <div className="relative aspect-square overflow-hidden bg-gray-100">
           <img
-            src={product.image}
-            alt={product.title}
+            src={product.image_c}
+            alt={product.title_c}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />
-          {product.salePrice && (
+          {product.sale_price_c && (
             <div className="absolute top-2 right-2 bg-error text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg">
               SALE
             </div>
           )}
-{product.stockStatus === 'out-of-stock' && (
+          {product.stock_level_c === 0 && (
             <div className="absolute top-2 left-2">
               <div className="flex items-center gap-1 bg-error text-white px-3 py-1.5 rounded-lg font-semibold text-sm shadow-md">
                 <ApperIcon name="XCircle" size={16} />
@@ -40,7 +40,7 @@ const ProductCard = ({ product, onAddToCart }) => {
               </div>
             </div>
           )}
-          {product.stockStatus === 'low-stock' && (
+          {product.stock_level_c > 0 && product.stock_level_c <= 5 && (
             <div className="absolute top-2 left-2">
               <div className="flex items-center gap-1 bg-warning text-white px-3 py-1.5 rounded-lg font-semibold text-sm shadow-md">
                 <ApperIcon name="AlertTriangle" size={16} />
@@ -48,7 +48,7 @@ const ProductCard = ({ product, onAddToCart }) => {
               </div>
             </div>
           )}
-          {product.stockStatus === 'in-stock' && (
+          {product.stock_level_c > 5 && (
             <div className="absolute top-2 left-2">
               <div className="flex items-center gap-1 bg-success text-white px-3 py-1.5 rounded-lg font-semibold text-sm shadow-md">
                 <ApperIcon name="CheckCircle" size={16} />
@@ -60,25 +60,25 @@ const ProductCard = ({ product, onAddToCart }) => {
 
         <div className="p-4">
           <h3 className="font-display font-semibold text-lg text-gray-800 mb-1 line-clamp-2">
-            {product.title}
+            {product.title_c}
           </h3>
           <p className="text-sm text-gray-500 mb-3 line-clamp-2">
-            {product.description}
+            {product.description_c}
           </p>
 <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              {product.salePrice ? (
+              {product.sale_price_c ? (
                 <>
                   <span className="text-2xl font-display font-bold text-error">
-                    ${product.salePrice.toFixed(2)}
+                    ${product.sale_price_c.toFixed(2)}
                   </span>
                   <span className="text-sm text-gray-500 line-through">
-                    ${product.price.toFixed(2)}
+                    ${product.price_c.toFixed(2)}
                   </span>
                 </>
               ) : (
                 <span className="text-2xl font-display font-bold text-primary">
-                  ${product.price.toFixed(2)}
+                  ${product.price_c.toFixed(2)}
                 </span>
               )}
             </div>
