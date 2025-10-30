@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useCart } from "@/App";
+import { useOutletContext } from "react-router-dom";
+import categoryService from "@/services/api/categoryService";
+import productService from "@/services/api/productService";
 import DailyDeals from "@/components/organisms/DailyDeals";
 import CategorySidebar from "@/components/organisms/CategorySidebar";
 import CartPanel from "@/components/organisms/CartPanel";
+import RecentlyViewed from "@/components/organisms/RecentlyViewed";
 import Header from "@/components/organisms/Header";
 import ProductGrid from "@/components/organisms/ProductGrid";
-import RecentlyViewed from "@/components/organisms/RecentlyViewed";
-import productService from "@/services/api/productService";
-import categoryService from "@/services/api/categoryService";
+
 function ShopPage() {
-  const { addToCart, recentlyViewed } = useCart();
+  const { addToCart, recentlyViewed } = useOutletContext();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
