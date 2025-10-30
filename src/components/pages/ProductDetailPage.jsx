@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import productService from "@/services/api/productService";
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
 import ImageGalleryModal from "@/components/atoms/ImageGalleryModal";
 import Badge from "@/components/atoms/Badge";
