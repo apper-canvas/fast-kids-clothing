@@ -1,4 +1,5 @@
-import { createBrowserRouter, Suspense, lazy } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import { getRouteConfig } from "./route.utils";
 
 // Lazy load page components
