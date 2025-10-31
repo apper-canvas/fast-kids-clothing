@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { AuthContext, useCart } from "@/App";
+import { useAuth } from "@/layouts/Root";
 import ApperIcon from "@/components/ApperIcon";
 import SearchBar from "@/components/molecules/SearchBar";
 import Loading from "@/components/ui/Loading";
@@ -28,9 +28,9 @@ const HARDCODED_CATEGORIES = [
   { id: "mom-dad", name: "Mom & Dad", icon: "Users" }
 ];
 
-const Header = ({ onSearch, onOpenCart, categories, categoriesLoading }) => {
-  const { totalItems } = useCart();
-  const { logout } = useContext(AuthContext);
+const Header = ({ onSearch, onOpenCart }) => {
+  const { logout } = useAuth();
+  const { totalItems, categories, categoriesLoading } = useOutletContext();
   const user = useSelector((state) => state.user.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
