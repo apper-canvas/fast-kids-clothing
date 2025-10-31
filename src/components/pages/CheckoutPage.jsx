@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import { useCart } from "@/App";
-import orderService from "@/services/api/orderService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
+import { useCart } from "@/App";
+import orderService from "@/services/api/orderService";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();

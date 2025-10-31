@@ -1,14 +1,13 @@
-import { Link, useOutletContext } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import categoryService from "@/services/api/categoryService";
-import { useAuth } from "@/layouts/Root";
-import { useCart } from "@/contexts/CartContext";
+import { AuthContext, useCart } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Loading from "@/components/ui/Loading";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
-import SearchBar from "@/components/molecules/SearchBar";
+import categoryService from "@/services/api/categoryService";
 
 const HARDCODED_CATEGORIES = [
   { id: "flash-sales", name: "Flash Sales", icon: "Flame" },
@@ -31,8 +30,7 @@ const HARDCODED_CATEGORIES = [
 
 const Header = ({ onSearch, onOpenCart, categories, categoriesLoading }) => {
   const { totalItems } = useCart();
-const { logout } = useAuth();
-  const { items, setIsCartOpen } = useOutletContext();
+  const { logout } = useContext(AuthContext);
   const user = useSelector((state) => state.user.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
