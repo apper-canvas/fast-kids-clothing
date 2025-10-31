@@ -262,7 +262,7 @@ const handleSubmitOrder = async () => {
               transition={{ duration: 0.3 }}
               className="bg-white rounded-xl shadow-card p-6"
             >
-              {currentStep === 1 && (
+{currentStep === 1 && (
                 <div>
                   <h2 className="text-xl font-display font-bold text-gray-800 mb-6">
                     Shipping Address
@@ -424,7 +424,8 @@ const handleSubmitOrder = async () => {
                   </div>
                 </div>
               )}
-{currentStep === 2 && (
+
+              {currentStep === 2 && (
                 <div>
                   <h2 className="text-xl font-display font-bold text-gray-800 mb-6">
                     Review Your Order
