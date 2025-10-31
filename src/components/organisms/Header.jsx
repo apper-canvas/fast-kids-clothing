@@ -1,13 +1,14 @@
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import categoryService from "@/services/api/categoryService";
 import { useAuth } from "@/layouts/Root";
 import ApperIcon from "@/components/ApperIcon";
-import SearchBar from "@/components/molecules/SearchBar";
-import Loading from "@/components/ui/Loading";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
-import categoryService from "@/services/api/categoryService";
+import Loading from "@/components/ui/Loading";
+import SearchBar from "@/components/molecules/SearchBar";
 
 const HARDCODED_CATEGORIES = [
   { id: "flash-sales", name: "Flash Sales", icon: "Flame" },
@@ -28,9 +29,13 @@ const HARDCODED_CATEGORIES = [
   { id: "mom-dad", name: "Mom & Dad", icon: "Users" }
 ];
 
-const Header = ({ onSearch, onOpenCart }) => {
+const Header = ({ totalItems, onSearch, onOpenCart }) => {
   const { logout } = useAuth();
-  const { totalItems, categories, categoriesLoading } = useOutletContext();
+const navigate = useNavigate();
+  const location = useLocation();
+  const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [categoriesError, setCategoriesError] = useState(null);
   const user = useSelector((state) => state.user.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,21 +43,12 @@ const Header = ({ onSearch, onOpenCart }) => {
   
 const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
-  // Close dropdown when clicking outside
-useEffect(() => {
-    function handleClickOutside(event) {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setIsUserMenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
@@ -61,7 +57,24 @@ useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  
+
+useEffect(() => {
+    const loadCategories = async () => {
+      setCategoriesLoading(true);
+      try {
+        const data = await categoryService.getAll();
+        setCategories(data);
+        setCategoriesError(null);
+      } catch (error) {
+        console.error('Error loading categories:', error);
+        setCategoriesError(error.message);
+        toast.error('Failed to load categories');
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+    loadCategories();
+  }, []);
 return (
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
